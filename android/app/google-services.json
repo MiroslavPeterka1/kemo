@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "8425252069",
+    "project_id": "kemo-6f3e9",
+    "storage_bucket": "kemo-6f3e9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8425252069:android:eaeaea1b587b592ef9a00c",
+        "android_client_info": {
+          "package_name": "com.example.kemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8425252069-hg31virrf6p93gri9m9p2fbv84gr3psm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8IEHRX8sR47_80fExAfIy9dO-ZuRXIwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "8425252069-hg31virrf6p93gri9m9p2fbv84gr3psm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "8425252069-en151hi81m26423p7rii30b8krpvd7fo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kemo.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,6 @@
+{
+    "auth_sign_in": "Sign in",
+    "@auth_sign_in": {
+      "description": "used id: auth_screen, "
+    }
+}

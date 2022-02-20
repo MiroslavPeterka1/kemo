@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
@@ -20,4 +21,5 @@ Future<void> setup() async {
   );
 
   getIt.registerLazySingleton<AppConfig>(() => config);
+  getIt.registerSingleton<FirebaseAuth>(FirebaseAuth.instance);
 }
