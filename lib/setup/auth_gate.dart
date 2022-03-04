@@ -12,8 +12,7 @@ class AuthGate extends StatelessWidget {
   final List<ProviderConfiguration> providerConfigurations = [
     const EmailProviderConfiguration(),
     const GoogleProviderConfiguration(
-      clientId:
-          '8425252069-hg31virrf6p93gri9m9p2fbv84gr3psm.apps.googleusercontent.com',
+      clientId: '8425252069-hg31virrf6p93gri9m9p2fbv84gr3psm.apps.googleusercontent.com',
     ),
   ];
 
