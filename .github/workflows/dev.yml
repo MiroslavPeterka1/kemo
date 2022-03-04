@@ -6,6 +6,9 @@ on:
     # branches: ['dev'] //TODO: remove after testing
 
     # dudělat proměné, do které se bude ukládat link na issue a tuto proměnnou použít pokud nalněna, tak ukončit nějak s chybou
+env:
+  FORMAT_FILE_ISSUE_URL: ''
+  FORMAT_FILE_ISSUE_ID: ''
 
 jobs:
   format-files:
@@ -36,6 +39,10 @@ jobs:
       - run: 'echo number: ${{ steps.create-issue.outputs.number }}'
       - run: 'echo status: ${{ steps.create-issue.outputs.status }}'
       - run: 'echo url: ${{ steps.create-issue.outputs.url }}'
+      - run: |
+          env.FORMAT_FILE_ISSUE_URL = steps.create-issue.outputs.url
+          echo '${{ env.FORMAT_FILE_ISSUE_URL }}'
+
 
   lint-analyze:
     runs-on: ubuntu-latest
