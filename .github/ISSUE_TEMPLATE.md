@@ -1,5 +1,5 @@
 ---
-title: CI/CD error - {{  }}
+title: CI/CD error
 assignees: MiroslavPeterka1
 labels: bug
 ---
