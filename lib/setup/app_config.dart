@@ -1,6 +1,5 @@
+import 'package:kemo/helpers/device_type.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-
-import '../helpers/device_type.dart';
 
 class AppConfig {
   AppConfig({required PackageInfo packageInfo, required this.devicePlatform})

@@ -2,11 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
+import 'package:kemo/firebase_options.dart';
+import 'package:kemo/helpers/device_type.dart';
+import 'package:kemo/setup/app_config.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-
-import '../firebase_options.dart';
-import '../helpers/device_type.dart';
-import 'app_config.dart';
 
 final getIt = GetIt.instance;
 
@@ -20,6 +19,7 @@ Future<void> setup() async {
     devicePlatform: devicePlatform,
   );
 
-  getIt.registerLazySingleton<AppConfig>(() => config);
-  getIt.registerSingleton<FirebaseAuth>(FirebaseAuth.instance);
+  getIt
+    ..registerLazySingleton<AppConfig>(() => config)
+    ..registerSingleton<FirebaseAuth>(FirebaseAuth.instance);
 }

@@ -26,7 +26,8 @@ class AuthGate extends StatelessWidget {
         if (!snapshot.hasData) {
           return Theme(
             data: Theme.of(context).copyWith(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.green)),
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+            ),
             child: SignInScreen(providerConfigs: providerConfigurations),
           );
         }
