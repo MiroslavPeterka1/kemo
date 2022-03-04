@@ -1,5 +1,11 @@
 {
     "conventionalCommits.scopes": [
         "CICD"
-    ]
+    ],
+    "dart.lineLength": 100,
+    "[dart]": {
+        "editor.rulers": [
+            100
+        ],
+    }
 }
