@@ -26,7 +26,8 @@ jobs:
           do
               dart format --line-length 100 --output=none --set-exit-if-changed $file
           done
-        if: failure()
+        # if: failure()
+        continue-on-error: true
       - uses: dblock/create-a-github-issue@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
