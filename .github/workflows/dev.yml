@@ -26,11 +26,11 @@ jobs:
           do
               dart format --line-length 100 --output=none --set-exit-if-changed $file
           done
-        # if: failure()
-        continue-on-error: true
+        if: failure()
       - uses: dblock/create-a-github-issue@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: exit 1
 
   lint-analyze:
     runs-on: ubuntu-latest
