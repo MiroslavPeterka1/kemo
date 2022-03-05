@@ -6,6 +6,8 @@ import 'package:kemo/screens/main_mob_screen.dart';
 import 'package:kemo/setup/init_app.dart';
 
 class AuthGate extends StatelessWidget {
+  var a = 'test';
+
   AuthGate({Key? key}) : super(key: key);
 
   final _auth = getIt.get<FirebaseAuth>();
@@ -24,8 +26,9 @@ class AuthGate extends StatelessWidget {
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Theme(
-            data: Theme.of(context)
-                .copyWith(colorScheme: ColorScheme.fromSeed(seedColor: Colors.green)),
+            data: Theme.of(context).copyWith(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+            ),
             child: SignInScreen(providerConfigs: providerConfigurations),
           );
         }
