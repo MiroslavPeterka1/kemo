@@ -60,6 +60,7 @@ jobs:
         with:
           flutter-version: "2.10.1"
           channel: "stable"
+      - name: Install dependencies
         run: flutter pub get
         # actual steps
       - name: Analyze code
