@@ -12,6 +12,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       
+      # - uses: actions/checkout@v2
+      # - uses: dart-lang/setup-dart@v1
+      # - uses: subosito/flutter-action@v2
+      #   with:
+      #     flutter-version: '2.10.1'
+      #     channel: 'stable'
+      # - name: Install dependencies
+      #   run: flutter pub get
+
+      # - name: Verify formatting dart
+      #   continue-on-error: true
+      #   run: |
+      #     libFiles=`find ./lib/ -type f -not -regex ".*\.\(freezed\|gr\|g\).dart" -not -name "*.arb"`
+      #     for file in $libFiles
+      #     do
+      #         dart format --line-length 100 --output=none --set-exit-if-changed $file
+      #     done
+      #   if: failure()
+      # - uses: dblock/create-a-github-issue@v3
+      #   id: create-issue-format
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - run: 'echo number: ${{ steps.create-issue-format.outputs.number }}'
+      # - run: 'echo status: ${{ steps.create-issue-format.outputs.status }}'
+      # - run: 'echo url: ${{ steps.create-issue-format.outputs.url }}'
+      # - name: Job result
+      #   run: |
+      #     if [[ ${{ steps.create-issue-format.outputs.number }} == '' ]]; then exit 0; else exit 1; fi
+        
+      
+          
+
+
+  lint-analyze:
+    runs-on: ubuntu-latest
+    steps:
+
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
       - uses: subosito/flutter-action@v2
@@ -19,59 +56,22 @@ jobs:
           flutter-version: '2.10.1'
           channel: 'stable'
       - name: Install dependencies
-        run: flutter pub get
-
-      - name: Verify formatting dart
-        continue-on-error: true
-        run: |
-          libFiles=`find ./lib/ -type f -not -regex ".*\.\(freezed\|gr\|g\).dart" -not -name "*.arb"`
-          for file in $libFiles
-          do
-              dart format --line-length 100 --output=none --set-exit-if-changed $file
-          done
+        run: flutter pub get       
+      - uses: invertase/github-action-dart-analyzer@v1
+        with:
+          fatal-infos: true
+          fatal-warnings: true
+          annotate: true
+          annotate-only: false
+          working-directory: ./
         if: failure()
       - uses: dblock/create-a-github-issue@v3
-        id: create-issue-format
+        id: create-issue-lint
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: 'echo number: ${{ steps.create-issue-format.outputs.number }}'
-      - run: 'echo status: ${{ steps.create-issue-format.outputs.status }}'
-      - run: 'echo url: ${{ steps.create-issue-format.outputs.url }}'
-      - name: Job result
-        run: |
-          if [[ ${{ steps.create-issue-format.outputs.number }} == '' ]]; then exit 0; else exit 1; fi
-        
-      
-          
-
-
-  # lint-analyze:
-  #   runs-on: ubuntu-latest
-  #   steps:
-
-  #     - uses: actions/checkout@v2
-  #     - uses: dart-lang/setup-dart@v1
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         flutter-version: '2.10.1'
-  #         channel: 'stable'
-  #     - name: Install dependencies
-  #       run: flutter pub get       
-  #     - uses: invertase/github-action-dart-analyzer@v1
-  #       with:
-  #         fatal-infos: true
-  #         fatal-warnings: true
-  #         annotate: true
-  #         annotate-only: false
-  #         working-directory: ./
-      #   if: failure()
-      # - uses: dblock/create-a-github-issue@v3
-      #   id: create-issue-lint
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - run: 'echo number: ${{ steps.create-issue-lint.outputs.number }}'
-      # - run: 'echo status: ${{ steps.create-issue-lint.outputs.status }}'
-      # - run: 'echo url: ${{ steps.create-issue-lint.outputs.url }}'
+      - run: 'echo number: ${{ steps.create-issue-lint.outputs.number }}'
+      - run: 'echo status: ${{ steps.create-issue-lint.outputs.status }}'
+      - run: 'echo url: ${{ steps.create-issue-lint.outputs.url }}'
 
   # remove-originalbranch:
   #   runs-on: ubuntu-latest
