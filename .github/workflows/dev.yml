@@ -22,6 +22,7 @@ jobs:
         run: flutter pub get
 
       - name: Verify formatting dart
+        continue-on-error: true
         run: |
           libFiles=`find ./lib/ -type f -not -regex ".*\.\(freezed\|gr\|g\).dart" -not -name "*.arb"`
           for file in $libFiles
