@@ -75,6 +75,7 @@ jobs:
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
+        id: create-issue-lint
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
