@@ -28,14 +28,17 @@ jobs:
           do
               dart format --line-length 100 --output=none --set-exit-if-changed $file
           done
-      #   if: failure()
-      # - uses: dblock/create-a-github-issue@v3
-      #   id: create-issue-format
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - run: 'echo number: ${{ steps.create-issue-format.outputs.number }}'
-      # - run: 'echo status: ${{ steps.create-issue-format.outputs.status }}'
-      # - run: 'echo url: ${{ steps.create-issue-format.outputs.url }}'
+        if: failure()
+      - uses: dblock/create-a-github-issue@v3
+        id: create-issue-format
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: 'echo number: ${{ steps.create-issue-format.outputs.number }}'
+      - run: 'echo status: ${{ steps.create-issue-format.outputs.status }}'
+      - run: 'echo url: ${{ steps.create-issue-format.outputs.url }}'
+      - name: Job result
+        run: |
+          if [[ ${{ steps.create-issue-format.outputs.number }} == '' ]]; then exit 0; else exit 1; fi
         
       
           
