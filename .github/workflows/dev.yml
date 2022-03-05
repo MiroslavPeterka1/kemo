@@ -78,15 +78,21 @@ jobs:
         id: create-issue-lint
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Send Slack Message - New Issue
+      #   if: steps.create-issue-lint.outputs.number != ""
       - name: TEST ECHO
         if: always()
         run: |
           "echo number: ${{ steps.create-issue-lint.outputs.number }}"
           "echo status: ${{ steps.create-issue-lint.outputs.status }}"
           "echo url: ${{ steps.create-issue-lint.outputs.url }}"
-          "echo value from analyzer - infos: ${{ steps.lint-action.outputs.infos }}"
-          "echo value from analyzer - warnings: ${{ steps.lint-action.outputs.warnings }}"
-          "echo value from analyzer - errors: ${{ steps.lint-action.outputs.errors }}"
+        # run: |
+        #   "echo number: ${{ steps.create-issue-lint.outputs.number }}"
+        #   "echo status: ${{ steps.create-issue-lint.outputs.status }}"
+        #   "echo url: ${{ steps.create-issue-lint.outputs.url }}"
+        #   "echo value from analyzer - infos: ${{ steps.lint-action.outputs.infos }}"
+        #   "echo value from analyzer - warnings: ${{ steps.lint-action.outputs.warnings }}"
+        #   "echo value from analyzer - errors: ${{ steps.lint-action.outputs.errors }}"
 
   # remove-originalbranch:
   #   runs-on: ubuntu-latest
