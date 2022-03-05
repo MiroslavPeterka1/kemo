@@ -92,7 +92,7 @@ jobs:
           echo value from analyzer - infos: ${{ steps.lint-action.outputs.infos }}
           echo value from analyzer - warnings: ${{ steps.lint-action.outputs.warnings }}
           echo value from analyzer - errors: ${{ steps.lint-action.outputs.errors }}
-          echo value from GH workflow: ${{ GITHUB_WORKFLOW }}
+          echo value from GH workflow: ${{ GITHUB_WORKFLOW }
 
   # remove-originalbranch:
   #   runs-on: ubuntu-latest
