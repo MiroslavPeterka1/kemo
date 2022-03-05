@@ -1,9 +1,8 @@
 ---
-# title: CI/CD error -> {{ env.GITHUB_WORKFLOW }} -> {{ env.JOB_TITLE }} 
+title: CI/CD error ->  
 assignees: MiroslavPeterka1
 labels: bug
 ---
-<!-- {{ env.BODY_TEXT }} -->
 
 
 Šablona by měla obsahovat:
