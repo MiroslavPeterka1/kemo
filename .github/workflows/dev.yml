@@ -83,9 +83,9 @@ jobs:
       - name: TEST ECHO
         if: always()
         run: |
-          "echo number: ${{ steps.create-issue-lint.outputs.number }}"
-          "echo status: ${{ steps.create-issue-lint.outputs.status }}"
-          "echo url: ${{ steps.create-issue-lint.outputs.url }}"
+          echo number: ${{ steps.create-issue-lint.outputs.number }}
+          echo status: ${{ steps.create-issue-lint.outputs.status }}
+          echo url: ${{ steps.create-issue-lint.outputs.url }}
         # run: |
         #   "echo number: ${{ steps.create-issue-lint.outputs.number }}"
         #   "echo status: ${{ steps.create-issue-lint.outputs.status }}"
