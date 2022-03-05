@@ -1,5 +1,5 @@
 ---
-title: Someone just pushed
+title: Someone just pushed {{ env.GITHUB_WORKFLOW }}
 assignees: MiroslavPeterka1
 labels: bug
 ---
