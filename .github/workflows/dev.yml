@@ -6,9 +6,6 @@ on:
     # branches: ['dev'] //TODO: remove after testing
 
     # dudělat proměné, do které se bude ukládat link na issue a tuto proměnnou použít pokud nalněna, tak ukončit nějak s chybou
-env:
-  FORMAT_FILE_ISSUE_URL: ''
-  FORMAT_FILE_ISSUE_ID: ''
 
 jobs:
   format-files:
@@ -33,12 +30,12 @@ jobs:
           done
         if: failure()
       - uses: dblock/create-a-github-issue@v3
-        id: create-issue
+        id: create-issue-format
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: 'echo number: ${{ steps.create-issue.outputs.number }}'
-      - run: 'echo status: ${{ steps.create-issue.outputs.status }}'
-      - run: 'echo url: ${{ steps.create-issue.outputs.url }}'
+      - run: 'echo number: ${{ steps.create-issue-format.outputs.number }}'
+      - run: 'echo status: ${{ steps.create-issue-format.outputs.status }}'
+      - run: 'echo url: ${{ steps.create-issue-format.outputs.url }}'
         
       
           
@@ -63,14 +60,14 @@ jobs:
           annotate: true
           annotate-only: false
           working-directory: ./
-        if: failure()
-      - uses: dblock/create-a-github-issue@v3
-        id: create-issue
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: 'echo number: ${{ steps.create-issue.outputs.number }}'
-      - run: 'echo status: ${{ steps.create-issue.outputs.status }}'
-      - run: 'echo url: ${{ steps.create-issue.outputs.url }}'
+      #   if: failure()
+      # - uses: dblock/create-a-github-issue@v3
+      #   id: create-issue-lint
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - run: 'echo number: ${{ steps.create-issue-lint.outputs.number }}'
+      # - run: 'echo status: ${{ steps.create-issue-lint.outputs.status }}'
+      # - run: 'echo url: ${{ steps.create-issue-lint.outputs.url }}'
 
   # remove-originalbranch:
   #   runs-on: ubuntu-latest
