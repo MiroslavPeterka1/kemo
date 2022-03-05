@@ -8,10 +8,9 @@ on:
     # dudělat proměné, do které se bude ukládat link na issue a tuto proměnnou použít pokud nalněna, tak ukončit nějak s chybou
 
 jobs:
-  format-files:
-    runs-on: ubuntu-latest
-    steps:
-      
+  # format-files:
+  #   runs-on: ubuntu-latest
+  #   steps:
       # - uses: actions/checkout@v2
       # - uses: dart-lang/setup-dart@v1
       # - uses: subosito/flutter-action@v2
@@ -48,7 +47,6 @@ jobs:
   lint-analyze:
     runs-on: ubuntu-latest
     steps:
-
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
       - uses: subosito/flutter-action@v2
