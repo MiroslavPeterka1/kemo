@@ -83,7 +83,7 @@ jobs:
           "echo number: ${{ steps.create-issue-lint.outputs.number }}"
           "echo status: ${{ steps.create-issue-lint.outputs.status }}"
           "echo url: ${{ steps.create-issue-lint.outputs.url }}"
-          "echo value from analyzer: ${{ steps.lint-action.outputs }}"
+          "echo value from analyzer: ${{ toJson(steps.lint-action.outputs) }}"
 
   # remove-originalbranch:
   #   runs-on: ubuntu-latest
