@@ -79,7 +79,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: TEST ECHO
-      - run: |
+        run: |
           "echo number: ${{ steps.create-issue-lint.outputs.number }}"
           "echo status: ${{ steps.create-issue-lint.outputs.status }}"
           "echo url: ${{ steps.create-issue-lint.outputs.url }}"
