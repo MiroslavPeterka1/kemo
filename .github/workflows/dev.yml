@@ -88,7 +88,16 @@ jobs:
         with:
           payload: |
             {
-            "text": "POKUS",
+            "text": "GitHub Action build result: ",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "GitHub Action build result: "
+                  }
+                }
+              ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
