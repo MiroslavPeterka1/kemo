@@ -1,5 +1,5 @@
 ---
-title: Someone just pushed {{ env.GITHUB_WORKFLOW }} - {{env.JOB_TITLE}}
+title: CICID -> {{ env.GITHUB_WORKFLOW }} -> problem in {{env.JOB_TITLE}}
 assignees: MiroslavPeterka1
 labels: bug
 ---

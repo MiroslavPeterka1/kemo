@@ -80,7 +80,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
           JOB_TITLE: "analyze-lint"
-          BODY_TEXT: "Analyzer outputs:/nInfos: ${steps.lint-action.outputs.infos}/nWarnings: ${steps.lint-action.outputs.warnings}/nErrors: ${steps.lint-action.outputs.errors}"
+          BODY_TEXT: "Analyzer outputs:\nInfos: ${{steps.lint-action.outputs.infos}}\nWarnings: ${{steps.lint-action.outputs.warnings}}\nErrors: ${{steps.lint-action.outputs.errors}}"
 
       # - name: Send Slack Message - New Issue
       #   if: steps.create-issue-lint.outputs.number != ""
