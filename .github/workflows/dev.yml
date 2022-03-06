@@ -8,7 +8,7 @@ on:
     # Postup:
     #  1) vyřešit aby se opravdu posílali chyby pouze když if failure -> prostřeleno
     #  2) Zkusit poslat do chyb to co je na výstupu -> prostřeleno
-    #  3) doplnit template pro create-issue-format
+    #  3) doplnit template pro create-issue-format -> prostřeleno
     #  4) připojit slack, aby odeslílal message pro každe issue
     #  5) Vybuildění apk
     #  6) Připojení apk jako artefakt
@@ -81,9 +81,27 @@ jobs:
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
           JOB_TITLE: "analyze-lint"
           BODY_TEXT: "Analyzer outputs:\nInfos: ${{steps.lint-action.outputs.infos}}\nWarnings: ${{steps.lint-action.outputs.warnings}}\nErrors: ${{steps.lint-action.outputs.errors}}"
-
-      # - name: Send Slack Message - New Issue
-      #   if: steps.create-issue-lint.outputs.number != ""
+      - name: Send Slack Message - New Issue
+        if: steps.create-issue-lint.outputs.number != ""
+        id: slack
+        uses: slackapi/slack-github-action@v1.18.0
+        with:
+          payload: |
+            {
+            "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
       - name: TEST ECHO
         if: always()
         run: |

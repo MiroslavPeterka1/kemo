@@ -2,7 +2,7 @@ name: Auto Assign to Project
 
 on:
   [issues]
-  # issues:
+  # issues: //TODO: nefunguje start on issue
   # # types: [opened]
   # pull_request:
   #   types: [opened]
