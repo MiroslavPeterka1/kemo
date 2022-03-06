@@ -5,6 +5,6 @@ labels: bug
 ---
 Pull request ID: {{ payload.number }}
 Pull request title: {{ payload.pull_request.title }}
-Pull request link: {{ payload.pull_request.url }}
+Pull request link: {{ payload.pull_request.html_url }}
 
 {{ env.BODY_TEXT }}
