@@ -1,4 +1,4 @@
-name: Merge DEV
+name: Merge to DEV
 on:
   pull_request:
     branches: ["dev"]
@@ -62,7 +62,7 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "!!!New issue occcure while ${ GITHUB_WORKFLOW } - files-format-check!!!",
+                  "text": "!!!New issue occcure while ${GITHUB_WORKFLOW} - files-format-check!!!",
                   "emoji": true
                   }
                 },
