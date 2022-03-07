@@ -55,7 +55,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
           JOB_TITLE: "files-format-check"
-          BODY_TEXT: "File format check result:\n ${{steps.files-format-check-action.outputs}}"
+          BODY_TEXT: "File format check result:\n ${{toJSON(steps.files-format-check-action.outputs)}}"
       - name: Send Slack Message - New Issue
         if: always() && steps.create-issue-format.outputs.number != ''
         id: slack
@@ -188,7 +188,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
           JOB_TITLE: "flutter-analyze"
-          BODY_TEXT: "Analyzer outputs:\n${{steps.flutter-analyze.outputs}}"
+          BODY_TEXT: "Analyzer outputs:\n${{toJSON(steps.flutter-analyze.outputs)}}"
       - name: Send Slack Message - New Issue
         if: always() && steps.create-issue-analyzer.outputs.number != ''
         id: slack
@@ -256,7 +256,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
           JOB_TITLE: "Build APK"
-          BODY_TEXT: "Build apk failed with error:\n${{steps.build-apk.outputs}}"
+          BODY_TEXT: "Build apk failed with error:\n${{toJSON(steps.build-apk.outputs)}}"
       - name: Send Slack Message - New Issue
         if: always() && steps.create-issue-build-APK.outputs.number != ''
         id: slack
@@ -298,15 +298,10 @@ jobs:
         with:
           name: release-apk
           path: build/app/outputs/apk/release/app-release.apk
-      - name: test
-        if: always()
-        run: |
-          echo "error ${{toJSON(steps.build-apk.outputs)}}"
 
   # remove-originalbranch:
   #   runs-on: ubuntu-latest
   #   needs: ['format-files', 'lint-analyze'] // spustí se až po doběhnutí předchozích kroků
-
 #  test:
 #    runs-on: ubuntu-latest
 #    steps:
