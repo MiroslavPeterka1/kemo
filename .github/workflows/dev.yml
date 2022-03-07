@@ -316,7 +316,7 @@ jobs:
           name: release-apk
       - name: Run tests on Firebase Test Lab
         run: |
-          gcloud firebase test android run --app=release-apk --timeout=100s
+          gcloud firebase test android run --app=release-apk --timeout=1000s
 
   # remove-originalbranch:
   #   runs-on: ubuntu-latest
