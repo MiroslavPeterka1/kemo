@@ -312,6 +312,7 @@ jobs:
         run: |
           echo "${{ env.project_id }}"
           echo "${{ env.id_token }}"
+          gcloud info
 
   # remove-originalbranch:
   #   runs-on: ubuntu-latest
