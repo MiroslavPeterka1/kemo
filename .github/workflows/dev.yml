@@ -117,21 +117,10 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-      - name: TEST ECHO
-        if: always()
-        run: |
-          echo number: ${{ steps.create-issue-lint.outputs.number }}
-          echo status: ${{ steps.create-issue-lint.outputs.status }}
-          echo url: ${{ steps.create-issue-lint.outputs.url }}
-          echo value from analyzer - infos: ${{ steps.lint-action.outputs.infos }}
-          echo value from analyzer - warnings: ${{ steps.lint-action.outputs.warnings }}
-          echo value from analyzer - errors: ${{ steps.lint-action.outputs.errors }}
-          echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
 
   # remove-originalbranch:
   #   runs-on: ubuntu-latest
   #   needs: ['format-files', 'lint-analyze'] // spustí se až po doběhnutí předchozích kroků
-
 #  test:
 #    runs-on: ubuntu-latest
 #    steps:
