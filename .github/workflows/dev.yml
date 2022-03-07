@@ -18,6 +18,7 @@ on:
     #  10) Pokud je vše ok, slac - linkem na apk
 
 jobs:
+  ###################### format ######################
   files-format-check:
     runs-on: ubuntu-latest
     steps:
@@ -32,7 +33,6 @@ jobs:
         run: flutter pub get
       # actual steps
       - name: Verify formatting dart
-        continue-on-error: true
         id: files-format-check-action
         run: |
           libFiles=`find ./lib/ -type f -not -regex ".*\.\(freezed\|gr\|g\).dart" -not -name "*.arb"`
@@ -85,7 +85,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-
+  ###################### lint ######################
   analyze-lint:
     runs-on: ubuntu-latest
     steps:
