@@ -6,8 +6,6 @@ import 'package:kemo/screens/main_mob_screen.dart';
 import 'package:kemo/setup/init_app.dart';
 
 class AuthGate extends StatelessWidget {
-  var a = 'test';
-
   AuthGate({Key? key}) : super(key: key);
 
   final _auth = getIt.get<FirebaseAuth>();
