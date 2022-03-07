@@ -62,7 +62,7 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "!!!New issue occcure while ${{ ${GITHUB_WORKFLOW} }} - files-format-check!!!",
+                  "text": "!!!New issue occcure while *Merge to DEV - files-format-check*!!!",
                   "emoji": true
                   }
                 },
