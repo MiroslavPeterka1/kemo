@@ -94,7 +94,7 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "!!!New issue occcure while ${{ GITHUB_WORKFLOW }} - analyze-lint!!!",
+                  "text": "!!!New issue occcure while ${ GITHUB_WORKFLOW } - analyze-lint!!!",
                   "emoji": true
                   }
                 },
