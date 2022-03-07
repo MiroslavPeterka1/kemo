@@ -310,11 +310,13 @@ jobs:
       - name: "Set up Cloud SDK"
         uses: "google-github-actions/setup-gcloud@v0"
       # actual steps
+      - name: Download app APK
+        uses: actions/download-artifact@v1
+        with:
+          name: release-apk
       - name: Run tests on Firebase Test Lab
         run: |
-          echo "${{ env.project_id }}"
-          echo "${{ env.id_token }}"
-          gcloud info
+          gcloud firebase test android run --app=release-apk --timeout=100s
 
   # remove-originalbranch:
   #   runs-on: ubuntu-latest
