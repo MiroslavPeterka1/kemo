@@ -104,7 +104,7 @@ jobs:
                   "type": "mrkdwn",
                   "text": "*Created issue:*\n<${{ steps.create-issue-lint.outputs.url }}|${{ steps.create-issue-lint.outputs.number }} - ${{ steps.create-issue-lint.outputs.status }}>"
                   }
-                }
+                },
                 {
                 "type": "section",
                 "text": {
