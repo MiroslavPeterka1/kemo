@@ -1,0 +1,9 @@
+android-pixel-4:
+  type: instrumentation
+  app: release-apk.apk
+  test: release-apk.apk
+  device:
+    - model: flame
+      version: 29
+      locale: "en"
+      orientation: portrait
