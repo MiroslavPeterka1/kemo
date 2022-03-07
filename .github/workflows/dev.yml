@@ -15,11 +15,7 @@ on:
   push:
     branches: ["dev"]
 
-    # Postup:
     # přidat testing?
-    #  5) Vybuildění apk
-    #  6) Připojení apk jako artefakt
-    #  7) Získání url na artefakt
     #  8) Poslat do firebase testLab
     #  9) Pokud v testlab chyba -> issue -> slack
     #  10) Pokud je vše ok, slac - linkem na apk
@@ -315,8 +311,10 @@ jobs:
           credentials_json: ${{ secrets.GCLOUD_AUTH }}
       - name: Set current project
         run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
+      - name: "Use gcloud CLI"
+        run: "gcloud info"
       - name: Run Instrumentation Tests in Firebase Test Lab
-        run: gcloud firebase test android run --type instrumentation --app release-apk/release-apk.apk --device model=Pixel3a,version=28,locale=pl,orientation=portrait
+        run: gcloud firebase test android run --type robo --app release-apk/release-apk.apk --device model=Pixel3a,version=28,locale=pl,orientation=portrait
 
   # remove-originalbranch:
   #   runs-on: ubuntu-latest
