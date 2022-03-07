@@ -18,37 +18,73 @@ on:
     #  10) Pokud je vše ok, slac - linkem na apk
 
 jobs:
-  # format-files:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  # - uses: actions/checkout@v2
-  # - uses: dart-lang/setup-dart@v1
-  # - uses: subosito/flutter-action@v2
-  #   with:
-  #     flutter-version: '2.10.1'
-  #     channel: 'stable'
-  # - name: Install dependencies
-  #   run: flutter pub get
-
-  # - name: Verify formatting dart
-  #   continue-on-error: true
-  #   run: |
-  #     libFiles=`find ./lib/ -type f -not -regex ".*\.\(freezed\|gr\|g\).dart" -not -name "*.arb"`
-  #     for file in $libFiles
-  #     do
-  #         dart format --line-length 100 --output=none --set-exit-if-changed $file
-  #     done
-  #   if: failure()
-  # - uses: dblock/create-a-github-issue@v3
-  #   id: create-issue-format
-  #   env:
-  #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  # - run: 'echo number: ${{ steps.create-issue-format.outputs.number }}'
-  # - run: 'echo status: ${{ steps.create-issue-format.outputs.status }}'
-  # - run: 'echo url: ${{ steps.create-issue-format.outputs.url }}'
-  # - name: Job result
-  #   run: |
-  #     if [[ ${{ steps.create-issue-format.outputs.number }} == '' ]]; then exit 0; else exit 1; fi
+  files-format-check:
+    runs-on: ubuntu-latest
+    steps:
+      #init
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "2.10.1"
+          channel: "stable"
+      - name: Install dependencies
+        run: flutter pub get
+      # actual steps
+      - name: Verify formatting dart
+        continue-on-error: true
+        id: files-format-check-action
+        run: |
+          libFiles=`find ./lib/ -type f -not -regex ".*\.\(freezed\|gr\|g\).dart" -not -name "*.arb"`
+          for file in $libFiles
+          do
+            dart format --line-length 100 --output=none --set-exit-if-changed $file
+          done
+      - name: Create issue if failed
+        if: failure()
+        uses: dblock/create-a-github-issue@v3
+        id: create-issue-lint
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_WORKFLOW: GITHUB_WORKFLOW
+          JOB_TITLE: "files-format-check"
+          BODY_TEXT: "File format check result:\n ${{steps.files-format-check-action.outputs}}"
+      - name: Send Slack Message - New Issue
+        if: always() && steps.create-issue-lint.outputs.number != ''
+        id: slack
+        uses: slackapi/slack-github-action@v1.18.0
+        with:
+          payload: |
+            {
+            "text": "GitHub Action build result: ",
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "!!!New issue occcure while ${ GITHUB_WORKFLOW } - files-format-check!!!",
+                  "emoji": true
+                  }
+                },
+                {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Created issue:*\n${{ steps.create-issue-lint.outputs.url }}"
+                  }
+                },
+                {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Related to pull request:*\n${{ github.event.pull_request.html_url }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
   analyze-lint:
     runs-on: ubuntu-latest
