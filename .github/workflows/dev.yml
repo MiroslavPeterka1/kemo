@@ -1,4 +1,13 @@
 name: Merge to DEV
+
+########## WF-STEPS ##########
+# => format documents
+# => lint code
+# => flutter analyze
+# => build apk + add as artefact
+# => test apk on firebase testlab
+# => send slack with apk
+
 on:
   pull_request:
     branches: ["dev"]
@@ -6,10 +15,7 @@ on:
     branches: ["dev"]
 
     # Postup:
-    #  1) vyřešit aby se opravdu posílali chyby pouze když if failure -> prostřeleno
-    #  2) Zkusit poslat do chyb to co je na výstupu -> prostřeleno
-    #  3) doplnit template pro create-issue-format -> prostřeleno
-    #  4) připojit slack, aby odeslílal message pro každe issue
+    # přidat testing?
     #  5) Vybuildění apk
     #  6) Připojení apk jako artefakt
     #  7) Získání url na artefakt
@@ -85,8 +91,9 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
   ###################### lint ######################
-  analyze-lint:
+  code-lint:
     runs-on: ubuntu-latest
     steps:
       # init
@@ -115,7 +122,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
-          JOB_TITLE: "analyze-lint"
+          JOB_TITLE: "code-lint"
           BODY_TEXT: "Analyzer outputs:\nInfos: ${{steps.lint-action.outputs.infos}}\nWarnings: ${{steps.lint-action.outputs.warnings}}\nErrors: ${{steps.lint-action.outputs.errors}}"
       - name: Send Slack Message - New Issue
         if: always() && steps.create-issue-lint.outputs.number != ''
@@ -131,6 +138,70 @@ jobs:
                 "text": {
                   "type": "plain_text",
                   "text": "!!!New issue occcure while Merge to DEV - analyze-lint!!!",
+                  "emoji": true
+                  }
+                },
+                {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Created issue:*\n${{ steps.create-issue-lint.outputs.url }}"
+                  }
+                },
+                {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Related to pull request:*\n${{ github.event.pull_request.html_url }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
+  ###################### flutter analyze ######################
+  flutter-analyze:
+    runs-on: ubuntu-latest
+    steps:
+      # init
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "2.10.1"
+          channel: "stable"
+      - name: Install dependencies
+        run: flutter pub get
+        # actual steps
+      - name: Flutter analyze
+        id: analyze-action
+        run: |
+          flutter analyze
+      - name: Create issue if failed
+        if: failure()
+        uses: dblock/create-a-github-issue@v3
+        id: create-issue-lint
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_WORKFLOW: GITHUB_WORKFLOW
+          JOB_TITLE: "flutter-analyze"
+          BODY_TEXT: "Analyzer outputs:\n${{steps.flutter-analyze}}"
+      - name: Send Slack Message - New Issue
+        if: always() && steps.create-issue-lint.outputs.number != ''
+        id: slack
+        uses: slackapi/slack-github-action@v1.18.0
+        with:
+          payload: |
+            {
+            "text": "GitHub Action build result: ",
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "!!!New issue occcure while Merge to DEV - flutter-analyze!!!",
                   "emoji": true
                   }
                 },
