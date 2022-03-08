@@ -321,7 +321,7 @@ jobs:
       - name: test
         run: |
           ls
-          unzip release-apk
+          unzip release-apk.zip
           ls
       - name: Run tests on Firebase Test Lab #TADY
         id: run-test-lab
