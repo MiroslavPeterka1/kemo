@@ -318,7 +318,7 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: release-apk
-      - name: Run tests on Firebase Test Lab
+      - name: Run tests on Firebase Test Lab #tady
         id: run-test-lab
         run: |
           gcloud firebase test android run --app=release-apk/app-release.apk --timeout=1000s
