@@ -321,10 +321,11 @@ jobs:
       - name: test
         run: |
           ls
+          unzip release-apk.zip
       - name: Run tests on Firebase Test Lab #TADY
         id: run-test-lab
         run: |
-          gcloud firebase test android run --app=release-apk/release-apk --timeout=1000s
+          gcloud firebase test android run --app=release-apk --timeout=1000s
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
@@ -347,7 +348,7 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "!!!New issue occcure while Merge to DEV - Build APK!!!",
+                  "text": "!!!New issue occcure while Merge to DEV - Test on Test Lab Firebase!!!",
                   "emoji": true
                   }
                 },
