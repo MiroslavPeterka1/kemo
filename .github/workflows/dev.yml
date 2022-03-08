@@ -229,6 +229,7 @@ jobs:
     permissions:
       contents: "read"
       id-token: "write"
+      # lksjfd test
     steps:
       # init
       - uses: actions/checkout@v2
