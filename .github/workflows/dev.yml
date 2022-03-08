@@ -226,6 +226,9 @@ jobs:
   build-APK:
     runs-on: ubuntu-latest
     needs: ["files-format-check", "code-lint", "flutter-analyze"]
+    permissions:
+      contents: "read"
+      id-token: "write"
     steps:
       # init
       - uses: actions/checkout@v2
