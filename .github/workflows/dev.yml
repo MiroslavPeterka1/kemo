@@ -322,6 +322,7 @@ jobs:
         run: |
           cd release-apk
           ls
+          dir
       - name: Run tests on Firebase Test Lab #TADY
         id: run-test-lab
         run: |
