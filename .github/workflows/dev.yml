@@ -318,14 +318,62 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: release-apk
-      - name: Run tests on Firebase Test Lab
+      - name: test
+        run: |
+          ls
+      - name: Run tests on Firebase Test Lab #TADY
+        id: run-test-lab
         run: |
           gcloud firebase test android run --app=release-apk --timeout=1000s
+      - name: Create issue if failed
+        if: failure()
+        uses: dblock/create-a-github-issue@v3
+        id: create-issue-test-lab
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_WORKFLOW: GITHUB_WORKFLOW
+          JOB_TITLE: "Send to Test-Lab FIREBASE"
+          BODY_TEXT: "Send to test-lab failed with error:\n${{toJSON(steps.run-test-lab.outputs)}}"
+      - name: Send Slack Message - New Issue
+        if: always() && steps.create-issue-test-lab.outputs.number != ''
+        id: slack
+        uses: slackapi/slack-github-action@v1.18.0
+        with:
+          payload: |
+            {
+            "text": "GitHub Action build result: ",
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "!!!New issue occcure while Merge to DEV - Build APK!!!",
+                  "emoji": true
+                  }
+                },
+                {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Created issue:*\n${{ steps.create-issue-test-lab.outputs.url }}"
+                  }
+                },
+                {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Related to pull request:*\n${{ github.event.pull_request.html_url }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
   # remove-originalbranch:
   #   runs-on: ubuntu-latest
   #   needs: ['format-files', 'lint-analyze'] // spustí se až po doběhnutí předchozích kroků
-
 #  test:
 #    runs-on: ubuntu-latest
 #    steps:
