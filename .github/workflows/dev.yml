@@ -229,7 +229,6 @@ jobs:
     permissions:
       contents: "read"
       id-token: "write"
-      # lksjfd testkjhaskldjfhklja
     steps:
       # init
       - uses: actions/checkout@v2
@@ -321,7 +320,7 @@ jobs:
       - name: Run tests on Firebase Test Lab
         id: run-test-lab
         run: |
-          gcloud firebase test android run --app=release-apk/app-release.apk --timeout=1000s
+          testResult = $(gcloud firebase test android run --app=release-apk/app-release.apk --timeout=1000s)
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
@@ -369,8 +368,7 @@ jobs:
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
       - name: test
         run: |
-          output=$(find -name 'More details are available at*')
-          echo "$output"
+          echo "$testResult"
 
   # remove-originalbranch:
   #   runs-on: ubuntu-latest
