@@ -369,7 +369,8 @@ jobs:
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
       - name: test
         run: |
-          echo "${{toJSON(steps.run-test-lab.outputs)}}"
+          output=$(find -name 'More details are available at*')
+          echo "$output"
 
   # remove-originalbranch:
   #   runs-on: ubuntu-latest
