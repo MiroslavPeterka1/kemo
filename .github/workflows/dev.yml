@@ -324,9 +324,8 @@ jobs:
         id: run-test-lab
         run: |
           service_account_file=/opt/service_account.json
-          gcloud firebase test android run --app=release-apk/app-release.apk --timeout=1000s --results-bucket cloud-test
+          gcloud firebase test android run --app=release-apk/app-release.apk --timeout=1000s --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
           rm $service_account_file
-          echo "$testResult"
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
