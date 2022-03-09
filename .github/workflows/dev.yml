@@ -319,7 +319,7 @@ jobs:
           name: release-apk
       - name: Test
         run: |
-          echo ${GOOGLE_PROJECT_ID}
+          echo "${GOOGLE_PROJECT_ID}"
       - name: Run tests on Firebase Test Lab
         id: run-test-lab
         run: |
