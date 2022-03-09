@@ -319,12 +319,12 @@ jobs:
           name: release-apk
       - name: Test
         run: |
-          echo "${GOOGLE_PROJECT_ID}"
+          echo "${{ env.GCLOUD_PROJECT }}"
       - name: Run tests on Firebase Test Lab
         id: run-test-lab
         run: |
           service_account_file=/opt/service_account.json
-          gcloud firebase test android run --app=release-apk/app-release.apk --timeout=1000s --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
+          gcloud firebase test android run --app=release-apk/app-release.apk --timeout=1000s --results-bucket cloud-test-${env.GCLOUD_PROJECT}
           rm $service_account_file
       - name: Create issue if failed
         if: failure()
