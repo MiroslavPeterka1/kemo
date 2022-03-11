@@ -446,6 +446,7 @@ jobs:
         id: run-test-lab
         run: |
           results=$(cat TestLab-results/test-results.txt)
+          echo results
       - name: Send Slack Message Seccess DEV
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
@@ -458,7 +459,7 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "Merge completed for ${{GITHUB_REF}}",
+                  "text": "Merge completed for $GITHUB_REF",
                   "emoji": true
                   }
                 },
@@ -466,7 +467,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*Firebase TestLab results:*\n${{results}}"
+                  "text": "*Firebase TestLab results:*\n$results"
                   }
                 }
               ]
