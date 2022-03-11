@@ -11,4 +11,4 @@ jobs:
       - name: Verify formatting dart
         id: files-format-check-action
         run: |
-          echo $github.event.head_commit.message
+          echo ${{github.event.head_commit.message}}
