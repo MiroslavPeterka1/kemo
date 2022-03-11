@@ -323,6 +323,7 @@ jobs:
           touch test-results.txt
           ls
           result=$(gcloud firebase test android run --app=release-apk/app-release.apk --results-dir=CICD_RESULTS)
+          echo "$result"
           cat result test-results.txt
       - name: Create issue if failed
         if: failure()
