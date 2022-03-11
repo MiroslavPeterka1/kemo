@@ -15,11 +15,6 @@ on:
   push:
     branches: ["dev"]
 
-    # přidat testing?
-    #  8) Poslat do firebase testLab
-    #  9) Pokud v testlab chyba -> issue -> slack
-    #  10) Pokud je vše ok, slac - linkem na apk
-
 jobs:
   ###################### format ######################
   files-format-check:
@@ -463,7 +458,7 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "Merge completed for ${GITHUB_REF}",
+                  "text": "Merge completed for ${{$GITHUB_REF}}",
                   "emoji": true
                   }
                 },
@@ -471,7 +466,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*Firebase TestLab results:*\n${results}"
+                  "text": "*Firebase TestLab results:*\n${{results}}"
                   }
                 }
               ]
