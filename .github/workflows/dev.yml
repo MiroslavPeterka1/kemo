@@ -320,8 +320,9 @@ jobs:
       - name: Run tests on Firebase Test Lab
         id: run-test-lab
         run: |
-          result=$(gcloud firebase test android run --app=release-apk/app-release.apk --results-dir=CICD_RESULTS)
           touch test-results.txt
+          ls
+          result=$(gcloud firebase test android run --app=release-apk/app-release.apk --results-dir=CICD_RESULTS)
           cat result test-results.txt
       - name: Create issue if failed
         if: failure()
