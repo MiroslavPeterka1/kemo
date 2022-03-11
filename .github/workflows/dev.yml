@@ -458,7 +458,7 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "Merge completed for ${{$GITHUB_REF}}",
+                  "text": "Merge completed for ${{GITHUB_REF}}",
                   "emoji": true
                   }
                 },
