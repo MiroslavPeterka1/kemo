@@ -15,24 +15,4 @@ jobs:
       - name: Verify formatting dart
         id: files-format-check-action
         run: |
-          echo $CI
-          echo $GITHUB_ACTION
-          echo $GITHUB_ACTION_PATH
-          echo $GITHUB_ACTION_REPOSITORY
-          echo $GITHUB_ACTIONS
-          echo $GITHUB_ACTOR
-          echo $GITHUB_API_URL
-          echo $GITHUB_BASE_REF
-          echo $GITHUB_ENV
-          echo $GITHUB_EVENT_NAME
-          echo $GITHUB_EVENT_PATH
-          echo $GITHUB_GRAPHQL_URL
-          echo $GITHUB_HEAD_REF
-          echo $GITHUB_JOB
-          echo $GITHUB_PATH
-          echo $GITHUB_REF
-          echo $GITHUB_REF_NAME
-          echo $GITHUB_REF_TYPE
-          echo $GITHUB_REPOSITORY
           echo $GITHUB_SHA
-          echo $GITHUB_WORKFLOW
