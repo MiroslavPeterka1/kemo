@@ -317,6 +317,7 @@ jobs:
         run: |
           gcloud firebase test android run --app=release-apk/app-release.apk --results-dir=CICD_RESULTS > test-results.txt
           result=$(cat test-results.txt)
+          echo result
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
@@ -325,7 +326,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
           JOB_TITLE: "Send to Test-Lab FIREBASE"
-          BODY_TEXT: "Send to test-lab failed with error:\n${result}"
+          BODY_TEXT: "Send to test-lab failed with error:\n$result"
       - name: Send Slack Message - New Issue
         if: always() && steps.create-issue-test-lab.outputs.number != ''
         id: slack
