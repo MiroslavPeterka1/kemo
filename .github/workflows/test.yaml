@@ -1,10 +1,6 @@
-name: test
+name: test-MIRDA
 
-on:
-  pull_request:
-    branches: ["dev"]
-  push:
-    branches: ["dev"]
+on: [push]
 jobs:
   files-format-check:
     runs-on: ubuntu-latest
