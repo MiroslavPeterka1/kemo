@@ -5,9 +5,6 @@ jobs:
   files-format-check:
     runs-on: ubuntu-latest
     steps:
-      #init
-      - uses: actions/checkout@v2
-      # actual steps
       - name: Verify formatting dart
         id: files-format-check-action
         run: |
