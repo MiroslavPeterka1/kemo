@@ -317,6 +317,7 @@ jobs:
         run: |
           gcloud firebase test android run --app=release-apk/app-release.apk --results-dir=CICD_RESULTS > test-results.txt
           result=$(cat test-results.txt)
+          echo result
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
@@ -325,7 +326,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
           JOB_TITLE: "Send to Test-Lab FIREBASE"
-          BODY_TEXT: "Send to test-lab failed with error:\n${result}"
+          BODY_TEXT: "Send to test-lab failed with error:\n$result"
       - name: Send Slack Message - New Issue
         if: always() && steps.create-issue-test-lab.outputs.number != ''
         id: slack
@@ -368,72 +369,73 @@ jobs:
           name: TestLab-results
           path: test-results.txt
 
-  ###################### Remove feature branch ######################
-  remove-feature-branch:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push'
-    needs: ["test-lab"]
-    steps:
-      # init
-      - uses: actions/checkout@v2
-      # actual steps
-      - name: Merge staging -> uat
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          target_branch: dev
-          github_token: ${{ github.token }}
-      - name: Create issue if failed
-        if: failure()
-        uses: dblock/create-a-github-issue@v3
-        id: create-issue-merge
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_WORKFLOW: GITHUB_WORKFLOW
-          JOB_TITLE: "Merge feature branch - DEV"
-          BODY_TEXT: "Fail during merging feature branch to DEV"
-      - name: Send Slack Message - New Issue
-        if: always() && steps.create-issue-merge.outputs.number != ''
-        id: slack
-        uses: slackapi/slack-github-action@v1.18.0
-        with:
-          payload: |
-            {
-            "text": "GitHub Action build result: ",
-            "blocks": [
-              {
-                "type": "header",
-                "text": {
-                  "type": "plain_text",
-                  "text": "!!!New issue occcure while Merge to DEV - Merge feature branch to DEV!!!",
-                  "emoji": true
-                  }
-                },
-                {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*Created issue:*\n${{ steps.create-issue-merge.outputs.url }}"
-                  }
-                },
-                {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*Related to pull request:*\n${{ github.event.pull_request.html_url }}"
-                  }
-                }
-              ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+  # ###################### Remove feature branch ######################
+  # remove-feature-branch:
+  #   runs-on: ubuntu-latest
+  #   if: github.event_name == 'push'
+  #   needs: ["test-lab"]
+  #   steps:
+  #     # init
+  #     - uses: actions/checkout@v2
+  #     # actual steps
+  #     - name: Merge staging -> uat
+  #       uses: devmasx/merge-branch@master
+  #       with:
+  #         type: now
+  #         target_branch: dev
+  #         github_token: ${{ github.token }}
+  #     - name: Create issue if failed
+  #       if: failure()
+  #       uses: dblock/create-a-github-issue@v3
+  #       id: create-issue-merge
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         GITHUB_WORKFLOW: GITHUB_WORKFLOW
+  #         JOB_TITLE: "Merge feature branch - DEV"
+  #         BODY_TEXT: "Fail during merging feature branch to DEV"
+  #     - name: Send Slack Message - New Issue
+  #       if: always() && steps.create-issue-merge.outputs.number != ''
+  #       id: slack
+  #       uses: slackapi/slack-github-action@v1.18.0
+  #       with:
+  #         payload: |
+  #           {
+  #           "text": "GitHub Action build result: ",
+  #           "blocks": [
+  #             {
+  #               "type": "header",
+  #               "text": {
+  #                 "type": "plain_text",
+  #                 "text": "!!!New issue occcure while Merge to DEV - Merge feature branch to DEV!!!",
+  #                 "emoji": true
+  #                 }
+  #               },
+  #               {
+  #               "type": "section",
+  #               "text": {
+  #                 "type": "mrkdwn",
+  #                 "text": "*Created issue:*\n${{ steps.create-issue-merge.outputs.url }}"
+  #                 }
+  #               },
+  #               {
+  #               "type": "section",
+  #               "text": {
+  #                 "type": "mrkdwn",
+  #                 "text": "*Related to pull request:*\n${{ github.event.pull_request.html_url }}"
+  #                 }
+  #               }
+  #             ]
+  #           }
+  #       env:
+  #         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  #         SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
   ###################### Inform about success ######################
   success-slack:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
-    needs: ["remove-feature-branch"]
+    needs: ["test-lab"]
+    # needs: ["remove-feature-branch"]
     steps:
       # init
       - uses: actions/checkout@v2
@@ -446,6 +448,7 @@ jobs:
         id: run-test-lab
         run: |
           results=$(cat TestLab-results/test-results.txt)
+          echo results
       - name: Send Slack Message Seccess DEV
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
@@ -458,7 +461,7 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "Merge completed for ${{$GITHUB_REF}}",
+                  "text": "Merge completed for $GITHUB_REF",
                   "emoji": true
                   }
                 },
@@ -466,7 +469,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*Firebase TestLab results:*\n${{results}}"
+                  "text": "*Firebase TestLab results:*\n$results"
                   }
                 }
               ]
