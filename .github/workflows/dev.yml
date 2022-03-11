@@ -7,7 +7,6 @@ name: Merge to DEV
 # => build apk + add as artefact
 # => test apk on firebase testlab
 # => send slack with apk
-# => remove origin branch
 
 on:
   pull_request:
