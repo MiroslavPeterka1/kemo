@@ -433,7 +433,8 @@ jobs:
   success-slack:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
-    needs: ["remove-feature-branch"]
+    needs: ["test-lab"]
+    # needs: ["remove-feature-branch"]
     steps:
       # init
       - uses: actions/checkout@v2
