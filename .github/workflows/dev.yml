@@ -14,6 +14,9 @@ on:
   push:
     branches: ["dev"]
 
+env:
+  BUILD_URL: "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+
 jobs:
   ###################### format ######################
   files-format-check:
@@ -32,17 +35,11 @@ jobs:
       - name: Verify formatting dart
         id: files-format-check-action
         run: |
-          echo "hokus pokus"
           libFiles=`find ./lib/ -type f -not -regex ".*\.\(freezed\|gr\|g\).dart" -not -name "*.arb"`
           for file in $libFiles
           do
-            result=$(dart format --line-length 100 --output=none --set-exit-if-changed $file)
+            result=$(dart format --line-length 10 --output=none --set-exit-if-changed $file)
           done
-          echo ____________________results____________________
-          echo "$result"
-          test=$(ls)
-          echo $test
-          echo "_______________result end________________"
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
@@ -51,7 +48,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
           JOB_TITLE: "files-format-check"
-          BODY_TEXT: "File format check result:\n ${result}"
+          BODY_TEXT: "File format check failed. See more here:\n$BUILD_URL"
       - name: Send Slack Message - New Issue
         if: always() && steps.create-issue-format.outputs.number != ''
         id: slack
