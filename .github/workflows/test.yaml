@@ -3,7 +3,6 @@ name: test-MIRDA
 on: [push]
 
 env:
-  BUILD_URL: "${{ GITHUB_SERVER_URL }}/${{ GITHUB_REPOSITORY }}/actions/runs/${{ GITHUB_RUN_ID }}"
   TEST: ${{ GITHUB_SERVER_URL }}
 
 jobs:
@@ -16,7 +15,6 @@ jobs:
           echo $TEST
           echo _________________
           echo "TEST =========== ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-          echo "$BUILD_URL" 
           echo ${{github.event.head_commit.message}}
           touch pokus.txt
           ls > pokus.txt
