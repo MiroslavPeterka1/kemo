@@ -47,6 +47,7 @@ jobs:
           JOB_TITLE: "files-format-check"
           BODY_TEXT: ""
           WF_URI: "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+
       - name: Send Slack Message - New Issue
         if: always() && steps.create-issue-format.outputs.number != ''
         id: slack
