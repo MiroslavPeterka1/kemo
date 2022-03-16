@@ -408,7 +408,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*Firebase TestLab results:*\n$results"
+                  "text": "*Firebase TestLab results:*\n${results}"
                   }
                 }
               ]
