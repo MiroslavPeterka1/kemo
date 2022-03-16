@@ -10,6 +10,7 @@ Pull request link: {{ payload.pull_request.html_url }}
 {{ env.BODY_TEXT }}
 
 {{ env.WF_URI }}
+---------------------------------
 RUN_ID: {{ env.RUN_ID }}
 REPOSITORY: {{ env.REPOSITORY }}
 SERVER_URL: {{ env.SERVER_URL }}
