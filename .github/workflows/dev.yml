@@ -10,7 +10,8 @@ name: Merge to DEV
 
 on:
   pull_request:
-    branches: ["dev"]
+    # branches: ["dev"] pak vrátit
+    branches: ["master"]
   push:
     branches: ["dev"]
 
@@ -37,7 +38,6 @@ jobs:
           do
             result=$(dart format --line-length 10 --output=none --set-exit-if-changed $file)
           done
-
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
