@@ -6,7 +6,7 @@ env:
   TEST: "baf"
 
 jobs:
-  files-format-check:
+  pokus:
     runs-on: ubuntu-latest
     steps:
       - name: Verify formatting dart
