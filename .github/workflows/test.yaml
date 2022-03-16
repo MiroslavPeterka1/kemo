@@ -12,8 +12,9 @@ jobs:
       - name: Verify formatting dart
         id: files-format-check-action
         run: |
-          echo "$BUILD_URL" 
-          echo ${{github.event.head_commit.message}}
-          touch pokus.txt
-          ls > pokus.txt
-          echo cat pokus.txt
+          echo "TEST =========== ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+           echo "$BUILD_URL" 
+           echo ${{github.event.head_commit.message}}
+           touch pokus.txt
+           ls > pokus.txt
+           echo cat pokus.txt
