@@ -10,15 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Verify formatting dart
-        id: files-format-check-action
+        id: create-issue-format
+        uses: dblock/create-a-github-issue@v3
         env:
-          TEST2: ${{ GITHUB_SERVER_URL }}
-        run: |
-          echo $TEST
-          echo $TEST2
-          echo _________________
-          echo "TEST =========== ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-          echo ${{github.event.head_commit.message}}
-          touch pokus.txt
-          ls > pokus.txt
-          echo cat pokus.txt
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_WORKFLOW: GITHUB_WORKFLOW
+          JOB_TITLE: "files-format-check"
