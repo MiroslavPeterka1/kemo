@@ -11,9 +11,16 @@ jobs:
     steps:
       - name: echo
         run: |
+          test1=$GITHUB_SERVER_URL
+          test2=$GITHUB_REPOSITORY
+          test3=$GITHUB_RUN_ID
           echo $GITHUB_SERVER_URL
           echo $GITHUB_REPOSITORY
           echo $GITHUB_RUN_ID
+          echo test1
+          echo test2
+          echo test3
+      - uses: actions/checkout@v2
       - name: Create issue
         uses: dblock/create-a-github-issue@v3
         id: create-issue-format
