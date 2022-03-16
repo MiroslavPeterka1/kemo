@@ -35,7 +35,7 @@ jobs:
           libFiles=`find ./lib/ -type f -not -regex ".*\.\(freezed\|gr\|g\).dart" -not -name "*.arb"`
           for file in $libFiles
           do
-            result=$(dart format --line-length 200 --output=none --set-exit-if-changed $file)
+            result=$(dart format --line-length 20 --output=none --set-exit-if-changed $file)
           done
       - name: Create issue if failed
         if: failure()
