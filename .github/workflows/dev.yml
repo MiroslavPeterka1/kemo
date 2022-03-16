@@ -38,7 +38,8 @@ jobs:
             result=$(dart format --line-length 20 --output=none --set-exit-if-changed $file)
           done
           echo ____________________results____________________
-          echo $results
+          echo "${result}"
+          echo "_______________result end________________"
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
