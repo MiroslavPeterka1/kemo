@@ -6,14 +6,19 @@ env:
   TEST: "baf"
 
 jobs:
-  pokus:
+  files-format-check:
     runs-on: ubuntu-latest
     steps:
       - name: Verify formatting dart
-        id: create-issue-format
-        uses: dblock/create-a-github-issue@v3
+        id: files-format-check-action
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_WORKFLOW: GITHUB_WORKFLOW
-          JOB_TITLE: "files-format-check"
-          WF_URI: "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          TEST2: ${GITHUB_SERVER_URL}
+        run: |
+          echo $TEST
+          echo
+          echo _________________
+          echo "TEST =========== ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          echo ${{github.event.head_commit.message}}
+          touch pokus.txt
+          ls > pokus.txt
+          echo cat pokus.txt
