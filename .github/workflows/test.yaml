@@ -12,7 +12,7 @@ jobs:
       - name: Verify formatting dart
         id: files-format-check-action
         env:
-          TEST2: ${GITHUB_SERVER_URL}
+          TEST2: ${{ GITHUB_SERVER_URL }}
         run: |
           echo $TEST
           echo $TEST2
