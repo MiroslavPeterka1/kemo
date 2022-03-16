@@ -7,6 +7,6 @@ Pull request ID: {{ payload.number }}
 Pull request title: {{ payload.pull_request.title }}
 Pull request link: {{ payload.pull_request.html_url }}
 
-context.action: {{ context.action }}
-
 {{ env.BODY_TEXT }}
+
+{{ env.WF_URI }}
