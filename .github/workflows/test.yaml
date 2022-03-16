@@ -1,6 +1,10 @@
 name: test-MIRDA
 
 on: [push]
+
+env:
+  BUILD_URL: "${{GITHUB_SERVER_URL}}/${{GITHUB_REPOSITORY}}/actions/runs/${{GITHUB_RUN_ID}}"
+
 jobs:
   files-format-check:
     runs-on: ubuntu-latest
