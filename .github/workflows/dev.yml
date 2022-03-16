@@ -35,6 +35,12 @@ jobs:
       - name: Verify formatting dart
         id: files-format-check-action
         run: |
+          echo "1"
+          echo $BUILD_URL
+          echo "2"
+          echo "{{ BUILD_URL }}
+          echo "3"
+          echo "${{ BUILD_URL }}"
           libFiles=`find ./lib/ -type f -not -regex ".*\.\(freezed\|gr\|g\).dart" -not -name "*.arb"`
           for file in $libFiles
           do
