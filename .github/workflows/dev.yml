@@ -37,6 +37,8 @@ jobs:
           do
             result=$(dart format --line-length 20 --output=none --set-exit-if-changed $file)
           done
+          echo ____________________results____________________
+          echo $results
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
@@ -408,7 +410,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*Firebase TestLab results:*\n${results}"
+                  "text": "*Firebase TestLab results:*\n${results}" 
                   }
                 }
               ]
