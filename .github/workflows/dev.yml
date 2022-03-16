@@ -38,7 +38,9 @@ jobs:
             result=$(dart format --line-length 20 --output=none --set-exit-if-changed $file)
           done
           echo ____________________results____________________
-          echo "${result}"
+          echo "$result"
+          test=$(ls)
+          echo $test
           echo "_______________result end________________"
       - name: Create issue if failed
         if: failure()
