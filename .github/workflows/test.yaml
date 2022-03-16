@@ -3,7 +3,8 @@ name: test-MIRDA
 on: [push]
 
 env:
-  BUILD_URL: "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+  BUILD_URL: "${{ GITHUB_SERVER_URL }}/${{ GITHUB_REPOSITORY }}/actions/runs/${{ GITHUB_RUN_ID }}"
+  TEST: ${{ GITHUB_SERVER_URL }}
 
 jobs:
   files-format-check:
@@ -12,9 +13,11 @@ jobs:
       - name: Verify formatting dart
         id: files-format-check-action
         run: |
+          echo $TEST
+          echo _________________
           echo "TEST =========== ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-           echo "$BUILD_URL" 
-           echo ${{github.event.head_commit.message}}
-           touch pokus.txt
-           ls > pokus.txt
-           echo cat pokus.txt
+          echo "$BUILD_URL" 
+          echo ${{github.event.head_commit.message}}
+          touch pokus.txt
+          ls > pokus.txt
+          echo cat pokus.txt
