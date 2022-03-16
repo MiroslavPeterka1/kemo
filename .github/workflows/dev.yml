@@ -46,9 +46,9 @@ jobs:
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
           JOB_TITLE: "files-format-check"
           BODY_TEXT: ""
-          SERVER_URL: $GITHUB_SERVER_URL
-          REPOSITORY: $GITHUB_REPOSITORY
-          RUN_ID: $GITHUB_RUN_ID
+          SERVER_URL: ${{GITHUB_SERVER_URL}}
+          REPOSITORY: ${{GITHUB_REPOSITORY}}
+          RUN_ID: ${{GITHUB_RUN_ID}}
 
       - name: Send Slack Message - New Issue
         if: always() && steps.create-issue-format.outputs.number != ''
