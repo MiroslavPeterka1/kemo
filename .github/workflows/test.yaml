@@ -9,6 +9,11 @@ jobs:
   pokus:
     runs-on: ubuntu-latest
     steps:
+      - name: echo
+        run: |
+          echo $GITHUB_SERVER_URL
+          echo: $GITHUB_REPOSITORY
+          echo $GITHUB_RUN_ID
       - name: Create issue
         uses: dblock/create-a-github-issue@v3
         id: create-issue-format
