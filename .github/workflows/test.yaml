@@ -20,6 +20,7 @@ jobs:
           echo test1
           echo test2
           echo test3
+
       - uses: actions/checkout@v2
       - name: Create issue
         uses: dblock/create-a-github-issue@v3
