@@ -37,6 +37,7 @@ jobs:
           do
             result=$(dart format --line-length 10 --output=none --set-exit-if-changed $file)
           done
+
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
@@ -49,6 +50,7 @@ jobs:
           SERVER_URL: ${{GITHUB_SERVER_URL}}
           REPOSITORY: ${{GITHUB_REPOSITORY}}
           RUN_ID: ${{GITHUB_RUN_ID}}
+
       - name: Send Slack Message - New Issue
         if: always() && steps.create-issue-format.outputs.number != ''
         id: slack
