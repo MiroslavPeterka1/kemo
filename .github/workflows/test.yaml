@@ -17,9 +17,9 @@ jobs:
           echo $GITHUB_SERVER_URL
           echo $GITHUB_REPOSITORY
           echo $GITHUB_RUN_ID
-          echo test1
-          echo test2
-          echo test3
+          echo $test1
+          echo $test2
+          echo $test3
 
       - uses: actions/checkout@v2
       - name: Create issue
