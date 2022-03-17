@@ -23,9 +23,6 @@ jobs:
           echo $test3
           echo $test4
 
-      - name: echo2
-        run: |
-          echo $test4
       - uses: actions/checkout@v2
       - name: Create issue
         uses: dblock/create-a-github-issue@v3
@@ -33,8 +30,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
-          JOB_TITLE: "files-format-check  $test4"
+          JOB_TITLE: ""
           BODY_TEXT: "abraka dabra"
-          SERVER_URL: $GITHUB_SERVER_URL
-          REPOSITORY: $GITHUB_REPOSITORY
-          RUN_ID: $GITHUB_RUN_ID
+          SERVER_URL: GITHUB_SERVER_URL
+          REPOSITORY: GITHUB_REPOSITORY
+          RUN_ID: GITHUB_RUN_ID
