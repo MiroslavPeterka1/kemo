@@ -31,7 +31,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
           JOB_TITLE: "files-format-check"
-          BODY_TEXT: $test4
+          BODY_TEXT: "abraka dabra"
           SERVER_URL: $GITHUB_SERVER_URL
           REPOSITORY: $GITHUB_REPOSITORY
           RUN_ID: $GITHUB_RUN_ID
