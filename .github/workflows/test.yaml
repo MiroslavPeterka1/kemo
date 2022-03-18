@@ -12,11 +12,13 @@ jobs:
       - name: echo
         env:
           POKUS: mirda
+          URI: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
         run: |
           test4="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
           echo $test4
           echo ${{ env.POKUS }}
           echo ${{ env.TEST }}
+          echo ${{ env.URI }}
 
       # - uses: actions/checkout@v2
       # - name: Create issue
