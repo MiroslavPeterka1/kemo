@@ -10,28 +10,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: echo
-        run: |
-          test1=$GITHUB_SERVER_URL
-          test2=$GITHUB_REPOSITORY
-          test3=$GITHUB_RUN_ID
-          test4="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
-          echo $GITHUB_SERVER_URL
-          echo $GITHUB_REPOSITORY
-          echo $GITHUB_RUN_ID
-          echo $test1
-          echo $test2
-          echo $test3
-          echo $test4
-
-      - uses: actions/checkout@v2
-      - name: Create issue
-        uses: dblock/create-a-github-issue@v3
-        id: create-issue-format
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_WORKFLOW: GITHUB_WORKFLOW
-          JOB_TITLE: ""
-          BODY_TEXT: "abraka dabra"
-          SERVER_URL: GITHUB_SERVER_URL
-          REPOSITORY: GITHUB_REPOSITORY
-          RUN_ID: GITHUB_RUN_ID
+          POKUS: mirda
+        run: |
+          test4="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          echo $test4
+          echo ${{ env.POKUS }}
+          echo ${{ env.TEST }}
+
+      # - uses: actions/checkout@v2
+      # - name: Create issue
+      #   uses: dblock/create-a-github-issue@v3
+      #   id: create-issue-format
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     GITHUB_WORKFLOW: GITHUB_WORKFLOW
+      #     JOB_TITLE: ""
+      #     BODY_TEXT: "abraka dabra"
+      #     SERVER_URL: GITHUB_SERVER_URL
+      #     REPOSITORY: GITHUB_REPOSITORY
+      #     RUN_ID: GITHUB_RUN_ID
