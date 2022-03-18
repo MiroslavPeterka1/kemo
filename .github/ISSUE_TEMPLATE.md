@@ -9,5 +9,6 @@ Pull request link: {{ payload.pull_request.html_url }}
 
 {{ env.BODY_TEXT }}
 
-SERVER_URL: {{ env.SERVER_URL }}
+URI_TEST: {{ env.URI_TEST }}
+URI_TEST2: {{ env.URI_TEST2 }}
 
