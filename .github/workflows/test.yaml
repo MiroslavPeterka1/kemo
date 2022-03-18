@@ -3,7 +3,7 @@ name: test-MIRDA
 on: [push]
 
 env:
-  TEST: "baf"
+  TEST: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
 
 jobs:
   pokus:
