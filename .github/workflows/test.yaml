@@ -15,11 +15,11 @@ jobs:
       - name: echoVariable
         run: |
           echo ${{ env.WF_URI }}
-      - uses: actions/checkout@v2
   issue-test:
     runs-on: ubuntu-latest
     needs: ["pokus"]
     steps:
+      - uses: actions/checkout@v2
       - name: Create issue
         uses: dblock/create-a-github-issue@v3
         id: create-issue-format
