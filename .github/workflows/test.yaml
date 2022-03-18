@@ -10,25 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: echo
-        env:
-          POKUS: mirda
-          URI: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
         run: |
-          test4="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
-          echo $test4
           echo ${{ env.POKUS }}
-          echo ${{ env.TEST }}
-          echo ${{ env.URI }}
 
-      # - uses: actions/checkout@v2
-      # - name: Create issue
-      #   uses: dblock/create-a-github-issue@v3
-      #   id: create-issue-format
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     GITHUB_WORKFLOW: GITHUB_WORKFLOW
-      #     JOB_TITLE: ""
-      #     BODY_TEXT: "abraka dabra"
-      #     SERVER_URL: GITHUB_SERVER_URL
-      #     REPOSITORY: GITHUB_REPOSITORY
-      #     RUN_ID: GITHUB_RUN_ID
+      - uses: actions/checkout@v2
+      - name: Create issue
+        uses: dblock/create-a-github-issue@v3
+        id: create-issue-format
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_WORKFLOW: GITHUB_WORKFLOW
+          JOB_TITLE: ""
+          BODY_TEXT: "abraka dabra"
+          SERVER_URL: ${{ env.TEST }}
