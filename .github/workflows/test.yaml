@@ -3,7 +3,7 @@ name: test-MIRDA
 on: [push]
 
 env:
-  TEST: "uri"
+  WF_URI: "uri"
 
 jobs:
   pokus:
@@ -11,18 +11,17 @@ jobs:
     steps:
       - name: setVariable
         run: |
-          echo "TEST=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_ENV
+          echo "WF_URI=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_ENV
       - name: echoVariable
         run: |
-          echo ${{ env.TEST }}
-      # - uses: actions/checkout@v2
-      # - name: Create issue
-      #   uses: dblock/create-a-github-issue@v3
-      #   id: create-issue-format
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     GITHUB_WORKFLOW: GITHUB_WORKFLOW
-      #     JOB_TITLE: "Toto je title"
-      #     BODY_TEXT: "Test text"
-      #     URI_TEST: ${{ env.TEST }}
-      #     URI_TEST2: ${{ steps.testId.URI }}
+          echo ${{ env.WF_URI }}
+      - uses: actions/checkout@v2
+      - name: Create issue
+        uses: dblock/create-a-github-issue@v3
+        id: create-issue-format
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_WORKFLOW: GITHUB_WORKFLOW
+          JOB_TITLE: "Toto je title"
+          BODY_TEXT: "Test text"
+          URI_TEST: ${{ env.WF_URI }}
