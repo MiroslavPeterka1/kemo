@@ -414,8 +414,7 @@ jobs:
         id: run-test-lab
         run: |
           echo cat TestLab-results/test-results.txt
-          echo "WF_URI=$(cat TestLab-results/test-results.txt) >> $GITHUB_ENV
-          TESTLAB_RESULTS=$(cat TestLab-results/test-results.txt)
+          echo "TESTLAB_RESULTS=$(cat TestLab-results/test-results.txt) >> $GITHUB_ENV
           echo ____________________results____________________
           echo ${{ env.TESTLAB_RESULTS }}
       - name: Send Slack Message Seccess DEV
