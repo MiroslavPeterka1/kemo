@@ -338,7 +338,7 @@ jobs:
       - name: Run tests on Firebase Test Lab
         id: run-test-lab
         run: |
-          echo "TESTLAB_RESULTS=gcloud firebase test android run --app=release-apk/app-release.apk --results-dir=CICD_RESULTS" >> $GITHUB_ENV
+          echo "TESTLAB_RESULTS=$(gcloud firebase test android run --app=release-apk/app-release.apk --results-dir=CICD_RESULTS)" >> $GITHUB_ENV
           echo ${{ env.TESTLAB_RESULTS }} > test-results.txt
       - name: Create issue if failed
         if: failure()
