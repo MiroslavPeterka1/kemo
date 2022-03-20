@@ -9,6 +9,6 @@ Pull request link: {{ payload.pull_request.html_url }}
 
 {{ env.BODY_TEXT }}
 
-URI_TEST: {{ env.URI_TEST }}
-URI_TEST2: {{ env.URI_TEST2 }}
+Link to workflow:
+{{ env.URI_WF }}
 
