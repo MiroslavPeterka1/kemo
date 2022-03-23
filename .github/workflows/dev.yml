@@ -465,6 +465,7 @@ jobs:
         run: |
           ls 
           ls TestLab-results
+
           echo cat TestLab-results/test-results.txt
           echo "TESTLAB_RESULTS=$(cat TestLab-results/test-results.txt) >> $GITHUB_ENV
           echo ____________________results____________________
