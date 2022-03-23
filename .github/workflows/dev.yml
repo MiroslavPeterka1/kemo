@@ -87,7 +87,7 @@ jobs:
               ]
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ISSUES }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
   ###################### lint ######################
@@ -160,7 +160,7 @@ jobs:
               ]
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ISSUES }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
   ###################### flutter analyze ######################
@@ -228,7 +228,7 @@ jobs:
               ]
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ISSUES }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
   ###################### build APK ######################
@@ -303,7 +303,7 @@ jobs:
               ]
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ISSUES }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
       - name: Save artefact
         uses: actions/upload-artifact@v1
@@ -384,7 +384,7 @@ jobs:
               ]
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ISSUES }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
       - name: Save artefact
         uses: actions/upload-artifact@v1
@@ -392,10 +392,10 @@ jobs:
           name: TestLab-results
           path: test-results.txt
 
-  ###################### Inform about success ######################
+  ###################### Inform about success PUSH ######################
   success-slack:
     runs-on: ubuntu-latest
-    # if: github.event_name == 'push'
+    if: github.event_name == 'push'
     needs: ["test-lab"]
     env:
       TESTLAB_RESULTS: ""
