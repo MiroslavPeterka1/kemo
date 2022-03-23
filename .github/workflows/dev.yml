@@ -395,7 +395,7 @@ jobs:
   ###################### Inform about success ######################
   success-slack:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    # if: github.event_name == 'push'
     needs: ["test-lab"]
     env:
       TESTLAB_RESULTS: ""
