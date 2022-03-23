@@ -315,8 +315,6 @@ jobs:
   test-lab:
     needs: [build-APK]
     runs-on: ubuntu-latest
-    env:
-      TESTLAB_RESULTS: ""
     steps:
       # init
       - uses: actions/checkout@v2
@@ -339,7 +337,6 @@ jobs:
         id: run-test-lab
         run: |
           gcloud firebase test android run --app=release-apk/app-release.apk > test-results.txt
-          echo "TESTLAB_RESULTS=$(cat test-results.txt)" >> $GITHUB_ENV
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
@@ -348,7 +345,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
           JOB_TITLE: "Send to Test-Lab FIREBASE"
-          BODY_TEXT: "Send to test-lab failed with error:\n${{ env.TESTLAB_RESULTS }}"
           URI_WF: ${{ env.WF_URI }}
       - name: Send Slack Message
         if: always() && steps.create-issue-test-lab.outputs.number != ''
@@ -392,6 +388,60 @@ jobs:
           name: TestLab-results
           path: test-results.txt
 
+  ###################### Inform about success PULL ######################
+  success-slack-pull:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    needs: ["test-lab"]
+    env:
+      TESTLAB_RESULTS: ""
+    steps:
+      # init
+      - uses: actions/checkout@v2
+      - name: setVariable
+        run: |
+          echo "WF_URI=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_ENV
+      # actual steps
+      - name: Download TestLabResults
+        uses: actions/download-artifact@v1
+        with:
+          name: TestLab-results
+      - name: Run tests on Firebase Test Lab
+        id: run-test-lab
+        run: |
+          echo cat TestLab-results/test-results.txt
+          echo "TESTLAB_RESULTS=$(cat TestLab-results/test-results.txt) >> $GITHUB_ENV
+          echo ____________________results____________________
+          echo ${{ env.TESTLAB_RESULTS }}
+      - name: Send Slack Message Seccess DEV
+        id: slack
+        uses: slackapi/slack-github-action@v1.18.0
+        with:
+          payload: |
+            {
+            "text": "GHA Pull request check to DEV - SUCCESS: ",
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "Merge completed for $GITHUB_REF",
+                  "emoji": true
+                  }
+                },
+                {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Firebase TestLab results:*\n${{ env.TESTLAB_RESULTS }}" 
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PUSH }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
   ###################### Inform about success PUSH ######################
   success-slack:
     runs-on: ubuntu-latest
@@ -423,7 +473,7 @@ jobs:
         with:
           payload: |
             {
-            "text": "GitHub Action build result: ",
+            "text": "GHA Push check to DEV - SUCCESS: ",
             "blocks": [
               {
                 "type": "header",
@@ -443,5 +493,5 @@ jobs:
               ]
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PUSH }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
