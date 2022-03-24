@@ -406,13 +406,15 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: TestLab-results
-      - name: Run tests on Firebase Test Lab
+      - name: TEST
+        run: |
+          ls 
+          ls TestLab-results
+          echo cat TestLab-results/test-results.txt
+      - name: Get testlab results from artefact
         id: run-test-lab
         run: |
-          echo cat TestLab-results/test-results.txt
           echo "TESTLAB_RESULTS=$(cat TestLab-results/test-results.txt) >> $GITHUB_ENV
-          echo ____________________results____________________
-          echo ${{ env.TESTLAB_RESULTS }}
       - name: Send Slack Message Seccess DEV
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
@@ -460,16 +462,10 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: TestLab-results
-      - name: Run tests on Firebase Test Lab
+      - name: Get testlab results from artefact
         id: run-test-lab
         run: |
-          ls 
-          ls TestLab-results
-
-          echo cat TestLab-results/test-results.txt
           echo "TESTLAB_RESULTS=$(cat TestLab-results/test-results.txt) >> $GITHUB_ENV
-          echo ____________________results____________________
-          echo ${{ env.TESTLAB_RESULTS }}
       - name: Send Slack Message Seccess DEV
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
