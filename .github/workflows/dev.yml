@@ -402,21 +402,6 @@ jobs:
         run: |
           echo "WF_URI=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_ENV
       # actual steps
-      - name: Download TestLabResults
-        uses: actions/download-artifact@v1
-        with:
-          name: TestLab-results
-      - name: TEST
-        run: |
-          ls -l
-          echo --------------
-          ls -l TestLab-results
-          echo --------------
-          cat TestLab-results/test-results.txt
-      - name: Get testlab results from artefact
-        id: run-test-lab
-        run: |
-          echo "TESTLAB_RESULTS=$(cat TestLab-results/test-results.txt)" >> $GITHUB_ENV
       - name: Send Slack Message Seccess DEV
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
@@ -431,13 +416,6 @@ jobs:
                   "type": "plain_text",
                   "text": "Merge completed for $GITHUB_REF",
                   "emoji": true
-                  }
-                },
-                {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*Firebase TestLab results:*\n${{ env.TESTLAB_RESULTS }}" 
                   }
                 }
               ]
@@ -460,14 +438,6 @@ jobs:
         run: |
           echo "WF_URI=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_ENV
       # actual steps
-      - name: Download TestLabResults
-        uses: actions/download-artifact@v1
-        with:
-          name: TestLab-results
-      - name: Get testlab results from artefact
-        id: run-test-lab
-        run: |
-          echo "TESTLAB_RESULTS=$(cat TestLab-results/test-results.txt)" >> $GITHUB_ENV
       - name: Send Slack Message Seccess DEV
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
@@ -482,13 +452,6 @@ jobs:
                   "type": "plain_text",
                   "text": "Merge completed for $GITHUB_REF",
                   "emoji": true
-                  }
-                },
-                {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*Firebase TestLab results:*\n${{ env.TESTLAB_RESULTS }}" 
                   }
                 }
               ]
