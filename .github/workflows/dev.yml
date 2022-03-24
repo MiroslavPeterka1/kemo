@@ -414,14 +414,14 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "Merge completed for $GITHUB_REF",
+                  "text": "Merge completed for ${{ env.WF_URI }}",
                   "emoji": true
                   }
                 }
               ]
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PUSH }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PR }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
   ###################### Inform about success PUSH ######################
@@ -450,7 +450,7 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "Merge completed for $GITHUB_REF",
+                  "text": "Merge completed for ${{ env.WF_URI }}",
                   "emoji": true
                   }
                 }
