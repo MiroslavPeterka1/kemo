@@ -95,6 +95,19 @@ jobs:
                     "text": "<${{ github.event.pull_request.html_url }}|Open PR>"
                   }
                 ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*From workflow:*"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ env.WF_URI }}|Open WF>"
+                  }
+                ]
               }
             ]
             }
