@@ -46,7 +46,7 @@ jobs:
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
-        id: create-issue-format
+        id: new-issue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
@@ -54,7 +54,7 @@ jobs:
           BODY_TEXT: ""
           URI_WF: ${{ env.WF_URI }}
       - name: Send Slack Message - New Issue
-        if: always() && steps.create-issue-format.outputs.number != ''
+        if: always() && steps.new-issue.outputs.number != ''
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
         with:
@@ -79,7 +79,7 @@ jobs:
                   },
                   {
                     "type": "mrkdwn",
-                    "text": "<${{ steps.create-issue-format.outputs.url }}|Open Issue>"
+                    "text": "<${{ steps.new-issue.outputs.url }}|Open Issue>"
                   }
                 ]
               },
@@ -144,7 +144,7 @@ jobs:
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
-        id: create-issue-lint
+        id: new-issue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
@@ -152,7 +152,7 @@ jobs:
           BODY_TEXT: "Analyzer outputs:\nInfos: ${{steps.lint-action.outputs.infos}}\nWarnings: ${{steps.lint-action.outputs.warnings}}\nErrors: ${{steps.lint-action.outputs.errors}}"
           URI_WF: ${{ env.WF_URI }}
       - name: Send Slack Message - New Issue
-        if: always() && steps.create-issue-lint.outputs.number != ''
+        if: always() && steps.new-issue.outputs.number != ''
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
         with:
@@ -164,22 +164,50 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "!!!New issue occcure while Merge to DEV - analyze-lint!!!",
+                  "text": "New issue occcure while Merge to DEV - Analyzer-LINT",
                   "emoji": true
-                  }
-                },
+                }
+              },
+              {
                 "type": "section",
                 "fields": [
                   {
-                  "type": "mrkdwn",
-                  "text": "*Created issue:*\n<${{ steps.create-issue-lint.outputs.url }}|Open Issue>"
+                    "type": "mrkdwn",
+                    "text": "*Created issue:*"
                   },
                   {
-                  "type": "mrkdwn",
-                  "text": "*Related to pull request:*\n<${{ github.event.pull_request.html_url }}|Open PR>"
+                    "type": "mrkdwn",
+                    "text": "<${{ steps.new-issue.outputs.url }}|Open Issue>"
                   }
                 ]
-              ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Related to pull request:*"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ github.event.pull_request.html_url }}|Open PR>"
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*From workflow:*"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ env.WF_URI }}|Open WF>"
+                  }
+                ]
+              }
+            ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ISSUES }}
@@ -209,7 +237,7 @@ jobs:
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
-        id: create-issue-analyzer
+        id: new-issue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
@@ -217,7 +245,7 @@ jobs:
           BODY_TEXT: ""
           URI_WF: ${{ env.WF_URI }}
       - name: Send Slack Message - New Issue
-        if: always() && steps.create-issue-analyzer.outputs.number != ''
+        if: always() && steps.new-issue.outputs.number != ''
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
         with:
@@ -229,22 +257,50 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "!!!New issue occcure while Merge to DEV - flutter-analyze!!!",
+                  "text": "New issue occcure while Merge to DEV - flutter-analyzer",
                   "emoji": true
-                  }
-                },
+                }
+              },
+              {
                 "type": "section",
                 "fields": [
                   {
-                  "type": "mrkdwn",
-                  "text": "*Created issue:*\n<${{ steps.create-issue-analyzer.outputs.url }}|Open Issue>"
+                    "type": "mrkdwn",
+                    "text": "*Created issue:*"
                   },
                   {
-                  "type": "mrkdwn",
-                  "text": "*Related to pull request:*\n<${{ github.event.pull_request.html_url }}|Open PR>"
+                    "type": "mrkdwn",
+                    "text": "<${{ steps.new-issue.outputs.url }}|Open Issue>"
                   }
                 ]
-              ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Related to pull request:*"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ github.event.pull_request.html_url }}|Open PR>"
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*From workflow:*"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ env.WF_URI }}|Open WF>"
+                  }
+                ]
+              }
+            ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ISSUES }}
@@ -281,7 +337,7 @@ jobs:
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
-        id: create-issue-build-APK
+        id: new-issue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
@@ -289,7 +345,7 @@ jobs:
           BODY_TEXT: "Build apk failed with error:\n${{toJSON(steps.build-apk.outputs)}}"
           URI_WF: ${{ env.WF_URI }}
       - name: Send Slack Message - New Issue
-        if: always() && steps.create-issue-build-APK.outputs.number != ''
+        if: always() && steps.new-issue.outputs.number != ''
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
         with:
@@ -301,22 +357,50 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "!!!New issue occcure while Merge to DEV - Build APK!!!",
+                  "text": "New issue occcure while Merge to DEV - build-APK",
                   "emoji": true
-                  }
-                },
+                }
+              },
+              {
                 "type": "section",
                 "fields": [
                   {
-                  "type": "mrkdwn",
-                  "text": "*Created issue:*\n<${{ steps.create-issue-build-APK.outputs.url }}|Open Issue>"
+                    "type": "mrkdwn",
+                    "text": "*Created issue:*"
                   },
                   {
-                  "type": "mrkdwn",
-                  "text": "*Related to pull request:*\n<${{ github.event.pull_request.html_url }}|Open PR>"
+                    "type": "mrkdwn",
+                    "text": "<${{ steps.new-issue.outputs.url }}|Open Issue>"
                   }
                 ]
-              ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Related to pull request:*"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ github.event.pull_request.html_url }}|Open PR>"
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*From workflow:*"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ env.WF_URI }}|Open WF>"
+                  }
+                ]
+              }
+            ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ISSUES }}
@@ -356,14 +440,14 @@ jobs:
       - name: Create issue if failed
         if: failure()
         uses: dblock/create-a-github-issue@v3
-        id: create-issue-test-lab
+        id: new-issue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_WORKFLOW: GITHUB_WORKFLOW
           JOB_TITLE: "Send to Test-Lab FIREBASE"
           URI_WF: ${{ env.WF_URI }}
       - name: Send Slack Message
-        if: always() && steps.create-issue-test-lab.outputs.number != ''
+        if: always() && steps.new-issue.outputs.number != ''
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
         with:
@@ -375,22 +459,50 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "!!!New issue occcure while Merge to DEV - Test on Test Lab Firebase!!!",
+                  "text": "New issue occcure while Merge to DEV - firebase-test-lab",
                   "emoji": true
-                  }
-                },
+                }
+              },
+              {
                 "type": "section",
                 "fields": [
                   {
-                  "type": "mrkdwn",
-                  "text": "*Created issue:*\n<${{ steps.create-issue-test-lab.outputs.url }}|Open Issue>"
+                    "type": "mrkdwn",
+                    "text": "*Created issue:*"
                   },
                   {
-                  "type": "mrkdwn",
-                  "text": "*Related to pull request:*\n<${{ github.event.pull_request.html_url }}|Open PR>"
+                    "type": "mrkdwn",
+                    "text": "<${{ steps.new-issue.outputs.url }}|Open Issue>"
                   }
                 ]
-              ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Related to pull request:*"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ github.event.pull_request.html_url }}|Open PR>"
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*From workflow:*"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ env.WF_URI }}|Open WF>"
+                  }
+                ]
+              }
+            ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ISSUES }}
@@ -421,18 +533,30 @@ jobs:
         with:
           payload: |
             {
-            "text": "GHA Pull request check to DEV - SUCCESS: ",
+            "text": "GitHub Action build result: ",
             "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "GHA Pull request check to DEV - SUCCESS",
+                  "emoji": true
+                }
+              },
               {
                 "type": "section",
                 "fields": [
                   {
-                  "type": "mrkdwn",
-                  "text": "Merge completed for <${{ env.WF_URI }}|here>"
+                    "type": "mrkdwn",
+                    "text": "*From workflow:*"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ env.WF_URI }}|Open WF>"
                   }
                 ]
-                }
-              ]
+              }
+            ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PR }}
@@ -458,18 +582,30 @@ jobs:
         with:
           payload: |
             {
-            "text": "GHA Push check to DEV - SUCCESS: ",
+            "text": "GitHub Action build result: ",
             "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "GHA Push check to DEV - SUCCESS",
+                  "emoji": true
+                }
+              },
               {
                 "type": "section",
                 "fields": [
                   {
-                  "type": "mrkdwn",
-                  "text": "Merge completed for <${{ env.WF_URI }}|here>"
+                    "type": "mrkdwn",
+                    "text": "*From workflow:*"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ env.WF_URI }}|Open WF>"
                   }
                 ]
-                }
-              ]
+              }
+            ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PUSH }}
