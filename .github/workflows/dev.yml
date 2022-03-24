@@ -416,7 +416,7 @@ jobs:
       - name: Get testlab results from artefact
         id: run-test-lab
         run: |
-          echo "TESTLAB_RESULTS=$(cat TestLab-results/test-results.txt) >> $GITHUB_ENV
+          echo "TESTLAB_RESULTS=$(cat TestLab-results/test-results.txt)" >> $GITHUB_ENV
       - name: Send Slack Message Seccess DEV
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
@@ -467,7 +467,7 @@ jobs:
       - name: Get testlab results from artefact
         id: run-test-lab
         run: |
-          echo "TESTLAB_RESULTS=$(cat TestLab-results/test-results.txt) >> $GITHUB_ENV
+          echo "TESTLAB_RESULTS=$(cat TestLab-results/test-results.txt)" >> $GITHUB_ENV
       - name: Send Slack Message Seccess DEV
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
