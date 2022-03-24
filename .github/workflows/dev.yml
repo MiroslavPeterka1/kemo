@@ -367,14 +367,14 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*Created issue:*\n${{ steps.create-issue-test-lab.outputs.url }}"
+                  "text": "*Created issue:*\n<${{ steps.create-issue-test-lab.outputs.url }}|Open Issue>"
                   }
                 },
                 {
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*Related to pull request:*\n${{ github.event.pull_request.html_url }}"
+                  "text": "*Related to pull request:*\n<${{ github.event.pull_request.html_url }}|Open PR>"
                   }
                 }
               ]
@@ -414,7 +414,7 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "Merge completed for ${{ env.WF_URI }}",
+                  "text": "Merge completed for <${{ env.WF_URI }}|here>",
                   "emoji": true
                   }
                 }
@@ -450,7 +450,7 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "Merge completed for ${{ env.WF_URI }}",
+                  "text": "Merge completed for <${{ env.WF_URI }}|here>",
                   "emoji": true
                   }
                 }
