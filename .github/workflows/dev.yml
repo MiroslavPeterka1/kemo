@@ -66,19 +66,37 @@ jobs:
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "!!!New issue occcure while Merge to DEV - files-format-check!!!",
+                  "text": "New issue occcure while Merge to DEV - files-format-check",
                   "emoji": true
-                  }
-                },
-                {
-                "type": "mrkdwn",
-                "text": "*Created issue:*\n<${{ steps.create-issue-format.outputs.url }}|Open Issue>"
-                },
-                {
-                "type": "mrkdwn",
-                "text": "*Related to pull request:*\n<${{ github.event.pull_request.html_url }}|Open PR>"
                 }
-              ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Created issue:*"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ steps.create-issue-format.outputs.url }}|Open Issue>"
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Related to pull request:*"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ github.event.pull_request.html_url }}|Open PR>"
+                  }
+                ]
+              }
+            ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ISSUES }}
