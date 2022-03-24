@@ -411,12 +411,13 @@ jobs:
             "text": "GHA Pull request check to DEV - SUCCESS: ",
             "blocks": [
               {
-                "type": "header",
-                "text": {
-                  "type": "plain_text",
-                  "text": "Merge completed for <${{ env.WF_URI }}|here>",
-                  "emoji": true
+                "type": "section",
+                "fields": [
+                  {
+                  "type": "mrkdwn",
+                  "text": "Merge completed for <${{ env.WF_URI }}|here>"
                   }
+                ]
                 }
               ]
             }
