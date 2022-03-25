@@ -306,10 +306,60 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ISSUES }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
+  ###################### Inform about success PULL ######################
+  success-slack-pull:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    needs: ["files-format-check", "code-lint", "flutter-analyze"]
+    env:
+      TESTLAB_RESULTS: ""
+    steps:
+      # init
+      - uses: actions/checkout@v2
+      - name: setVariable
+        run: |
+          echo "WF_URI=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_ENV
+      # actual steps
+      - name: Send Slack Message Seccess DEV
+        id: slack
+        uses: slackapi/slack-github-action@v1.18.0
+        with:
+          payload: |
+            {
+            "text": "GitHub Action build result: ",
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "GHA Pull request check to DEV - SUCCESS",
+                  "emoji": true
+                }
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*From workflow:*"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ env.WF_URI }}|Open WF>"
+                  }
+                ]
+              }
+            ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PR }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
   ###################### build APK ######################
   build-APK:
     runs-on: ubuntu-latest
     needs: ["files-format-check", "code-lint", "flutter-analyze"]
+    if: github.event_name == 'push'
     permissions:
       contents: "read"
       id-token: "write"
@@ -414,6 +464,7 @@ jobs:
   ###################### Firebase TestLab ######################
   test-lab:
     needs: [build-APK]
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       # init
@@ -513,59 +564,9 @@ jobs:
           name: TestLab-results
           path: test-results.txt
 
-  ###################### Inform about success PULL ######################
-  success-slack-pull:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    needs: ["test-lab"]
-    env:
-      TESTLAB_RESULTS: ""
-    steps:
-      # init
-      - uses: actions/checkout@v2
-      - name: setVariable
-        run: |
-          echo "WF_URI=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_ENV
-      # actual steps
-      - name: Send Slack Message Seccess DEV
-        id: slack
-        uses: slackapi/slack-github-action@v1.18.0
-        with:
-          payload: |
-            {
-            "text": "GitHub Action build result: ",
-            "blocks": [
-              {
-                "type": "header",
-                "text": {
-                  "type": "plain_text",
-                  "text": "GHA Pull request check to DEV - SUCCESS",
-                  "emoji": true
-                }
-              },
-              {
-                "type": "section",
-                "fields": [
-                  {
-                    "type": "mrkdwn",
-                    "text": "*From workflow:*"
-                  },
-                  {
-                    "type": "mrkdwn",
-                    "text": "<${{ env.WF_URI }}|Open WF>"
-                  }
-                ]
-              }
-            ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PR }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-
   ###################### Inform about success PUSH ######################
   success-slack:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     needs: ["test-lab"]
     env:
       TESTLAB_RESULTS: ""
